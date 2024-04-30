@@ -63,14 +63,18 @@ export default function onRenderClient(pageContext: PageContextRenderer) {
 			//
 			// In the future, the editor might be server-side rendered.
 			// For now, the trouble of isomorphic rendering the editor is not worth it.
-			hydrate(
-				() => (
-					<MetaProvider>
-						<Root page={currentPage()!} pageProps={currentPageProps} data={pageContext.data} />
-					</MetaProvider>
-				),
-				rootElement
-			)
+			if (pageContext.pageProps.isLit) {
+			} else {
+				hydrate(
+					() => (
+						<MetaProvider>
+							<Root page={currentPage()!} pageProps={currentPageProps} data={pageContext.data} />
+						</MetaProvider>
+					),
+					rootElement
+				)
+			}
+
 			isFirstRender = false
 		}
 		// https://posthog.com/docs/integrate/client/js#one-page-apps-and-page-views

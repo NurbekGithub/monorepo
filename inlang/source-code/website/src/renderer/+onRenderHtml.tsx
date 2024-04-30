@@ -3,11 +3,15 @@ import { generateHydrationScript, renderToString } from "solid-js/web"
 import { escapeInject, dangerouslySkipEscape } from "vike/server"
 import { setCurrentPageContext } from "./state.js"
 import Root from "./+Root.jsx"
+import { html, render } from "@lit-labs/ssr"
+import { collectResultSync } from "@lit-labs/ssr/lib/render-result.js"
 
 // import the css
 import "./app.css"
 import { MetaProvider, renderTags } from "@solidjs/meta"
 import { languageTag } from "#src/paraglide/runtime.js"
+
+import "./../pages/m/+Page.js"
 
 // See https://vike.dev/data-fetching
 export const passToClient = ["pageProps", "routeParams", "languageTag", "data"] as const
@@ -33,12 +37,26 @@ export default async function onRenderHtml(pageContext: PageContextRenderer): Pr
 	// mutated during render so you can include in server-rendered template later
 	const tags: any[] = []
 
-	const renderedPage = renderToString(() => (
-		<MetaProvider tags={tags}>
-			<Root page={pageContext.Page} pageProps={pageContext.pageProps} data={pageContext.data} />
-		</MetaProvider>
-	))
+	const renderedPage = () => {
+		if (pageContext.pageProps.isLit) {
+			console.log("lit")
+			return collectResultSync(render(pageContext.Page))
+		} else {
+			console.log("solid")
+			return renderToString(() => (
+				<MetaProvider tags={tags}>
+					<Root page={pageContext.Page} pageProps={pageContext.pageProps} data={pageContext.data} />
+				</MetaProvider>
+			))
+		}
+	}
 
+	console.log(renderedPage())
+	// renderToString(() => (
+	// 	<MetaProvider tags={tags}>
+	// 		<Root page={pageContext.Page} pageProps={pageContext.pageProps} data={pageContext.data} />
+	// 	</MetaProvider>
+	// ))
 	return escapeInject`<!DOCTYPE html>
     <html lang="${dangerouslySkipEscape(
 			languageTag()
@@ -59,7 +77,7 @@ export default async function onRenderHtml(pageContext: PageContextRenderer): Pr
       </head>
 	  <!-- setting min-h/w-screen to allow child elements to span to the entire screen  -->
       <body class="website min-h-screen min-w-screen bg-background text-on-background" id="root">
-		    ${dangerouslySkipEscape(renderedPage!)}
+		    ${dangerouslySkipEscape(renderedPage())}
       </body>
     </html>`
 }

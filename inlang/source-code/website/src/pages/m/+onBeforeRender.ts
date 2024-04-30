@@ -134,6 +134,7 @@ export default async function onBeforeRender(pageContext: PageContext) {
 				tableOfContents: tabelOfContents[pagePath] || {},
 				manifest: item,
 				recommends: [],
+				isLit: true,
 			} as PageProps,
 		},
 	}
