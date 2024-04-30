@@ -23,34 +23,53 @@ export default class InlangDocLayout extends LitElement {
 				display: flex;
 				width: 100%;
 				height: 100%;
+				position: relative;
 			}
 			.right-column {
 				width: 230px;
 				height: 100%;
+				display: block;
+				margin-top: 16px;
+				position: sticky;
+				top: 124px;
 			}
 			.main-column {
-				flex-grow: 1;
-				width: min-content;
-				position: relative;
+				width: calc(100% - 460px - 80px);
+				display: block;
 				height: 100%;
 				padding: 0 40px;
+				overflow: hidden;
 			}
 			@media (max-width: 1280px) {
 				.main-column {
 					padding: 0 20px;
+					width: calc(100% - 230px - 40px);
 				}
 			}
 			@media (max-width: 768px) {
 				.main-column {
 					padding: 0;
+					width: 100%;
 				}
 			}
 			.left-column {
 				width: 230px;
 				height: 100%;
+				display: block;
+				margin-top: 16px;
+				position: sticky;
+				top: 124px;
 			}
 			.open-menu-button {
 				display: none;
+				width: 52px;
+				height: 52px;
+				border-radius: 50%;
+				background-color: #fff;
+				box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+				justify-content: center;
+				align-items: center;
+				border: 1px solid var(--sl-color-neutral-200);
 			}
 			@media (max-width: 1280px) {
 				.right-column {
@@ -62,11 +81,26 @@ export default class InlangDocLayout extends LitElement {
 					display: none;
 				}
 				.open-menu-button {
-					display: block;
-					position: absolute;
-					top: 10px;
-					right: 10px;
+					display: flex;
+					position: fixed;
+					bottom: 16px;
+					right: 16px;
 				}
+			}
+			sl-drawer::part(header) {
+				padding-top: 114px;
+			}
+			@media (max-width: 768px) {
+				sl-drawer::part(header) {
+					padding-top: 124px;
+				}
+			}
+			sl-drawer::part(body) {
+				padding-top: 0;
+			}
+			.test {
+				height: 100px;
+				width: 100px;
 			}
 		`,
 	]
@@ -98,8 +132,13 @@ export default class InlangDocLayout extends LitElement {
 				></inlang-doc-navigation>
 			</div>
 			<div class="main-column">
-				<div class="open-menu-button">
-					<sl-button @click=${() => (this._drawerIsOpen = true)}>Open</sl-button>
+				<div class="open-menu-button" @click=${() => (this._drawerIsOpen = true)}>
+					<svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 24 24">
+						<path
+							fill="currentColor"
+							d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z"
+						/>
+					</svg>
 				</div>
 				<slot></slot>
 			</div>

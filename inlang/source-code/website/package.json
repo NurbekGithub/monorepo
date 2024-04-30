@@ -16,6 +16,9 @@
 		"node": ">=18.0.0"
 	},
 	"dependencies": {
+		"@inlang/doc-layout-component": "workspace:*",
+		"@lit-labs/ssr": "^3.2.2",
+		"@lit-labs/ssr-client": "^1.1.7",
 		"@lix-js/client": "workspace:*",
 		"@lix-js/fs": "workspace:*",
 		"@sentry/browser": "^7.27.0",

@@ -1,6 +1,7 @@
 import { html, LitElement, css } from "lit"
 import { customElement, property } from "lit/decorators.js"
 import { baseStyling } from "../styling/base.js"
+import { localizeRoute } from "../helper/localizeRoute.js"
 
 import SlMenu from "@shoelace-style/shoelace/dist/components/menu/menu.component.js"
 import SlMenuItem from "@shoelace-style/shoelace/dist/components/menu-item/menu-item.component.js"
@@ -139,7 +140,6 @@ export default class InlangDocNavigation extends LitElement {
 							if (typeof value === "string") {
 								const route = key
 								const navTitle = route.split("/").pop()
-
 								return html`<a
 									class=${`menu-item ${this.currentRoute === route && "menu-item-selected"}`}
 									href=${this._basePath + route}
@@ -155,23 +155,28 @@ export default class InlangDocNavigation extends LitElement {
 												: true
 										return html`<a
 											class=${`menu-item ${this.currentRoute === route && "menu-item-selected"}`}
-											href=${isLink ? path : this._basePath + route}
+											href=${localizeRoute(
+												(isLink ? path : this._basePath + route) as string,
+												"en",
+												"en"
+											)}
 											>${navTitle ? navTitle.replaceAll("-", " ") : "Introduction"}
-											${isLink &&
-											html`<div class="link-indicator">
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													width="100%"
-													height="100%"
-													fill="none"
-													viewBox="0 0 16 16"
-												>
-													<path
-														fill="currentColor"
-														d="M15.716 8.433l-5.759 5.784a.96.96 0 01-1.64-.683c0-.256.1-.501.28-.683l4.12-4.136H.96A.958.958 0 010 7.751a.966.966 0 01.96-.964h11.758L8.599 2.648A.968.968 0 019.28 1c.255 0 .5.102.68.283l5.76 5.784a.963.963 0 01.207 1.053.965.965 0 01-.21.313z"
-													/>
-												</svg>
-											</div> `}</a
+											${isLink
+												? html`<div class="link-indicator">
+														<svg
+															xmlns="http://www.w3.org/2000/svg"
+															width="100%"
+															height="100%"
+															fill="none"
+															viewBox="0 0 16 16"
+														>
+															<path
+																fill="currentColor"
+																d="M15.716 8.433l-5.759 5.784a.96.96 0 01-1.64-.683c0-.256.1-.501.28-.683l4.12-4.136H.96A.958.958 0 010 7.751a.966.966 0 01.96-.964h11.758L8.599 2.648A.968.968 0 019.28 1c.255 0 .5.102.68.283l5.76 5.784a.963.963 0 01.207 1.053.965.965 0 01-.21.313z"
+															/>
+														</svg>
+												  </div> `
+												: ``}</a
 										> `
 									})}
 									<div class="space"></div>`

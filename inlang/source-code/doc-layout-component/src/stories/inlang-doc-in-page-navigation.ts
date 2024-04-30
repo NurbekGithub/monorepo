@@ -88,14 +88,41 @@ export default class InlangDocInPageNavigation extends LitElement {
 			.replaceAll(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, "")
 			.replaceAll("✂", "")
 			.replaceAll(":", "")
+			.replaceAll("&", "")
 	}
 
 	private _findHeadlineElements = (elements: HTMLCollection) => {
+		// this section exists to handle the case where the markdown is wrapped in a div (not pretty but better then async parser)
+		const htmlElements = []
+		if (elements.length === 1) {
+			const children = elements[0]?.children
+			if (children && children.length > 1) {
+				// eslint-disable-next-line unicorn/no-for-loop
+				for (let i = 0; i < children.length; i++) {
+					htmlElements.push(children[i])
+				}
+			} else if (children) {
+				const newChildren = children[0]?.children
+				if (newChildren) {
+					// eslint-disable-next-line unicorn/no-for-loop
+					for (let i = 0; i < newChildren.length; i++) {
+						htmlElements.push(newChildren[i])
+					}
+				}
+			}
+		} else {
+			// eslint-disable-next-line unicorn/no-for-loop
+			for (let i = 0; i < elements.length; i++) {
+				htmlElements.push(elements[i])
+			}
+		}
+
 		const headers: Headlines = []
 
 		// eslint-disable-next-line unicorn/no-for-loop
-		for (let i = 0; i < elements.length; i++) {
-			const element = elements[i]
+		for (let i = 0; i < htmlElements.length; i++) {
+			const element: Element = htmlElements[i] as Element
+
 			// Check if the element is an h1 or h2
 			if (
 				element &&
@@ -129,21 +156,21 @@ export default class InlangDocInPageNavigation extends LitElement {
 				${this._headlines.map((headline) => {
 					if (headline.level === "H1") {
 						return html`<a class=${`link h1`} href="#${headline.anchor}"
-							>${headline.element.textContent}</a
+							>${headline.element.textContent?.replace("#", "")}</a
 						>`
 					} else if (headline.level === "H2") {
 						return html`<a
 							class=${`link ${this._doesH1Exist(this._headlines) ? "h2" : "h1"}`}
 							styles=${"margin-left: 10px"}
 							href="#${headline.anchor}"
-							>${headline.element.textContent}</a
+							>${headline.element.textContent?.replace("#", "")}</a
 						>`
 					} else {
 						return html`<a
 							class=${`link ${this._doesH1Exist(this._headlines) ? "h3" : "h2"}`}
 							styles=${"margin-left: 20px"}
 							href="#${headline.anchor}"
-							>${headline.element.textContent}</a
+							>${headline.element.textContent?.replace("#", "")}</a
 						>`
 					}
 				})}

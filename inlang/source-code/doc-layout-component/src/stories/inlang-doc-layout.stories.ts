@@ -14,7 +14,7 @@ export default meta
 export const Props: StoryObj = {
 	render: () =>
 		html`<inlang-doc-layout .manifest=${manifest} .currentRoute=${"/"}
-			>${unsafeHTML(mockhtml)}</inlang-doc-layout
+			><article>${unsafeHTML(mockhtml)}</article></inlang-doc-layout
 		> `,
 }
 

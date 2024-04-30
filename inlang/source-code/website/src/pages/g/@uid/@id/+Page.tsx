@@ -10,7 +10,7 @@ import MarketplaceLayout from "#src/interface/marketplace/MarketplaceLayout.jsx"
 import Link from "#src/renderer/Link.jsx"
 import EditOutline from "~icons/material-symbols/edit-outline-rounded"
 import { currentPageContext } from "#src/renderer/state.js"
-import { Recommends } from "#src/pages/m/+Page.jsx"
+//import { Recommends } from "#src/pages/m/+Page.jsx"
 
 /**
  * The page props are undefined if an error occurred during parsing of the markdown.
@@ -170,9 +170,9 @@ export default function Page(props: PageProps) {
 								</section>
 							</Show>
 						</div>
-						<Show when={props.recommends}>
+						{/* <Show when={props.recommends}>
 							<Recommends recommends={props.recommends!} />
-						</Show>
+						</Show> */}
 						<div class="mt-20">
 							<GetHelp text="Do you have questions?" />
 						</div>

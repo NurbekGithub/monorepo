@@ -16,8 +16,21 @@
 		"en": "Simple, adaptable and tiny i18n library that integrates with any framework"
 	},
 	"pages": {
-		"/": "./inlang/source-code/paraglide/paraglide-js/README.md",
-		"/changelog": "./inlang/source-code/paraglide/paraglide-js/CHANGELOG.md"
+		"Overview": {
+			"/": "./inlang/source-code/paraglide/paraglide-js/README.md",
+			"/changelog": "./inlang/source-code/paraglide/paraglide-js/CHANGELOG.md"
+		},
+		"Architecture": {
+			"/installation": "./inlang/source-code/paraglide/paraglide-js/README.md",
+			"/usage": "./inlang/source-code/paraglide/paraglide-js/README.md",
+			"/configuration": "./inlang/source-code/paraglide/paraglide-js/README.md",
+			"/api": "./inlang/source-code/paraglide/paraglide-js/README.md",
+			"/examples": "./inlang/source-code/paraglide/paraglide-js/README.md"
+		},
+		"Guides": {
+			"App Router": "/g/wxcebbig/guide-lorissigrist-useParaglideJsWithNextjsAppRouter",
+			"Pages Router": "/g/uxohikde/guide-lorissigrist-useParaglideJsWithNextjsPagesRouter"
+		}
 	},
 	"keywords": [
 		"paraglide js",
