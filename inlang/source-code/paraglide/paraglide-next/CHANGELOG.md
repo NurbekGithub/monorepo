@@ -1,5 +1,14 @@
 # @inlang/paraglide-next
 
+## 0.1.7
+
+### Patch Changes
+
+- 419d8b6: Fix issue where the localised routing didn't always use the most specific pathname as outlined in https://kit.svelte.dev/docs/advanced-routing#sorting
+- 432d158: Fixes a warning about `useRouter` not being available on the server. This would never have caused a crash but the log was annoying.
+- Updated dependencies [32cbe48]
+  - @inlang/paraglide-js@1.7.3
+
 ## 0.1.6
 
 ### Patch Changes
